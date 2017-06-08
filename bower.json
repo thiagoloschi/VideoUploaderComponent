@@ -1,0 +1,33 @@
+{
+  "name": "wistia uploader",
+  "authors": [
+    "Thiago Loschi <thiagoloschi@gmail.com>"
+  ],
+  "description": "This is challenge for Process St that implements a Video Uploader, using the Wistia API",
+  "main": "js/app.js",
+  "keywords": [
+    "wistia",
+    "video",
+    "uploader",
+    "process",
+    "st",
+    "angular"
+  ],
+  "license": "MIT",
+  "homepage": "www.thiagoloschi.com/process",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular-route": "^1.6.4",
+    "font-awesome": "^4.7.0",
+    "angular": "^1.6.4",
+    "bootstrap": "^3.3.7",
+    "jquery": "^3.2.1",
+    "blueimp-file-upload": "^9.18.0"
+  }
+}
