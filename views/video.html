@@ -4,50 +4,44 @@
             <h5>Upload videos to our Wistia Account</h5>
         </div>
         <div class="uploader">
-                <label for="add">
-                    <div class="plus">
-                         +
-                    </div>
-                    <div class="caption">
-                        Drag your files here
-                    </div>
+                <div ng-hide="fileuploaded">
+                    <label for="add" >
+                        <div class="plus">
+                             <img src="../../img/play.png" alt="+">
+                        </div>
+                        <div class="caption">
+                            {{$ctrl.msg}}
+                        </div>
 
-                </label>
-                <!-- <input type="file" name="files" style="display: none;"/> -->
-                <!-- <form id="fileupload" enctype="multipart/form-data" data-ng-app="app" data-ng-controller="ProcessCtrl" data-file-upload="options" data-ng-class="{'fileupload-processing': processing() || loadingFiles}"> -->
+                    </label>
+                </div>
+                    <form id="fileupload" action="//jquery-file-upload.appspot.com/" method="POST" enctype="multipart/form-data" data-ng-app="demo"
+                    data-ng-controller="ConfigController" data-file-upload="options" data-ng-class="{'fileupload-processing': processing() || loadingFiles}">
 
-                    <!-- <input id="entrada" type="file" multiple style="display: none;"/ ng-model="files" ng-change="teste(this)"> -->
-
-
-                    <!-- The file upload form used as target for the file upload widget -->
-                    <form id="fileupload" action="//jquery-file-upload.appspot.com/" method="POST" enctype="multipart/form-data" data-ng-app="demo" data-ng-controller="DemoFileUploadController" data-file-upload="options" data-ng-class="{'fileupload-processing': processing() || loadingFiles}">
-                        <!-- Redirect browsers with JavaScript disabled to the origin page -->
                         <noscript><input type="hidden" name="redirect" value="https://blueimp.github.io/jQuery-File-Upload/"></noscript>
 
-                        <!-- The fileupload-buttonbar contains buttons to add/delete files and start/cancel the upload -->
+
                         <div class="row fileupload-buttonbar" style="display: none;">
                             <div class="col-lg-7">
-                                <!-- The fileinput-button span is used to style the file input field as button -->
+
                                 <span class="btn btn-success fileinput-button" ng-class="{disabled: disabled}" >
                                     <i class="glyphicon glyphicon-plus"></i>
                                     <span>Add files...</span>
-                                    <input id="add" type="file" name="files[]" multiple ng-disabled="disabled" >
+                                    <input id="add" type="file" name="files[]" ng-disabled="disabled" >
                                 </span>
 
-                                <!-- The global file processing state -->
                                 <span class="fileupload-process"></span>
                             </div>
-                            <!-- The global progress state -->
+
                             <div class="col-lg-5 fade" data-ng-class="{in: active()}">
-                                <!-- The global progress bar -->
+
                                 <div class="progress progress-striped active" data-file-upload-progress="progress()"><div class="progress-bar progress-bar-success" data-ng-style="{width: num + '%'}"></div></div>
-                                <!-- The extended global progress state -->
+
                                 <div class="progress-extended">&nbsp;</div>
                             </div>
                         </div>
 
-                        <!-- The table listing the files available for upload/download -->
-                        <table class="table table-striped files ng-cloak">
+                        <!-- <table class="table table-striped files ng-cloak">
                             <tr data-ng-repeat="file in queue" data-ng-class="{'processing': file.$processing()}">
                                 <td data-ng-switch data-on="!!file.thumbnailUrl">
                                     <div class="preview" data-ng-switch-when="true">
@@ -70,7 +64,7 @@
                                     <div class="progress progress-striped active fade" data-ng-class="{pending: 'in'}[file.$state()]" data-file-upload-progress="file.$progress()"><div class="progress-bar progress-bar-success" data-ng-style="{width: num + '%'}"></div></div>
                                 </td>
                                 <td>
-                                    <button type="button" class="btn btn-primary start" data-ng-click="file.$submit()" data-ng-hide="!file.$submit || options.autoUpload" data-ng-disabled="file.$state() == 'pending' || file.$state() == 'rejected'">
+                                    <button type="button" class="btn btn-primary start" data-ng-click="upload(file)" data-ng-hide="!file.$submit || options.autoUpload" data-ng-disabled="file.$state() == 'pending' || file.$state() == 'rejected'">
                                         <i class="glyphicon glyphicon-upload"></i>
                                         <span>Start</span>
                                     </button>
@@ -78,16 +72,56 @@
                                         <i class="glyphicon glyphicon-ban-circle"></i>
                                         <span>Cancel</span>
                                     </button>
-                                    <button data-ng-controller="FileDestroyController" type="button" class="btn btn-danger destroy" data-ng-click="file.$destroy()" data-ng-hide="!file.$destroy">
+                                    <button data-ng-controller="OperationsController" type="button" class="btn btn-danger destroy" data-ng-click="file.$destroy()" data-ng-hide="!file.$destroy">
                                         <i class="glyphicon glyphicon-trash"></i>
                                         <span>Delete</span>
                                     </button>
                                 </td>
                             </tr>
-                        </table>
+                        </table> -->
+
+
+
+                            <div data-ng-repeat="file in queue" data-ng-class="{'processing': proccess(file)}">
+                                <div ng-show="fileuploaded" class="row showfirst files ng-cloak">
+                                    <strong data-ng-show="file.error" class="error text-danger">{{file.error}}</strong>
+                                    <div data-ng-hide="file.error">
+                                        <div class="preview" data-file-upload-preview="file"></div>
+                                        <div class="info">
+                                            <div class="col-sm-4">
+                                                Name: <span>{{file.name}}</span>
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <p class="size">{{file.size | formatFileSize}}</p>
+                                                <div class="progress progress-striped active fade" data-ng-class="{pending: 'in'}[file.$state()]" data-file-upload-progress="file.$progress()"><div class="progress-bar progress-bar-success" data-ng-style="{width: num + '%'}"></div></div>
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <p>File type: {{file.type}}</p>
+                                            </div>
+                                        </div>
+                                        <button type="button" class="btn btn-primary start" data-ng-click="upload(file)"
+                                        data-ng-hide="!file.$submit || options.autoUpload" data-ng-disabled="file.$state() == 'pending' || file.$state() == 'rejected'">Upload</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <br><br><br><br>
+                            <div  class="showfirst">
+                                <h1>Video uploaded!</h1>
+
+                                <img ng-src="{{video.thumbnail.url}}" height="video.thumbnail.url">
+                                <div class="" ng-bind="video.name"></div>
+                                <div class="">{{video.duration}}</div>
+                                <div class="">{{video.created}}</div>
+                                <div class="">{{video.duration}}</div>
+
+                            </div>
+
+
+
                     </form>
+
                     <br>
                 </div>
-
 
         </div>

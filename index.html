@@ -8,13 +8,14 @@
 	    <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.min.css">
         <link rel="stylesheet" href="bower_components/blueimp-file-upload/css/jquery.fileupload-ui.css">
 	    <link rel="stylesheet" href="bower_components/blueimp-file-upload/css/jquery.fileupload.css">
+        <link rel="stylesheet" href="/css/style.css">
     </head>
     <body>
         <header class="header">
             <h1>Video Uploader</h1>
         </header>
 
-        <uploader></uploader>
+        <uploader msg="Drag your files or click here to upload them."></uploader>
 
         <footer class="navbar-fixed-bottom">
             <div class="container-fluid">
@@ -54,6 +55,8 @@
         <!-- The main application script -->
         <script src="js/app.js"></script>
 
+    	<script src="js/controllers/operationsController.js"></script>
+        <script src="js/controllers/configController.js"></script>
     	<script src="js/components/uploader.js"></script>
     </body>
 </html>
